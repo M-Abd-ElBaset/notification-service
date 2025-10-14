@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Adapter\PaymentServiceInterface;
+use App\Adapter\StripeServiceAdapter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(PaymentServiceInterface::class, function ($app){
+            return $app->make(StripeServiceAdapter::class);
+        });
     }
 
     /**
